@@ -51,8 +51,7 @@ CREATE TABLE prerequisite (
     ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT fk_pr_req
     FOREIGN KEY (prereq_id) REFERENCES course(course_id)
-    ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT chk_prereq_not_self CHECK (course_id <> prereq_id)
+    ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 -- Rooms
