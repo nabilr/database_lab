@@ -1,75 +1,91 @@
 # SQL Database Tutorial Lab
 A comprehensive SQL learning environment with beginner, intermediate, and advanced tutorials using a realistic university database schema.
 
-## 📚 Tutorial Structure
+## 📚 Tutorial Levels & Topics
 
-### 🔵 Foundations (START HERE!)
-**Topics Covered:** Database Creation, Data Types, Constraints, Foreign Keys
-- **Directory:** `tutorial/00-foundations/`
-- **Database:** `simple_school`
-- **Docker Image:** `university-mysql-foundations`
+| Level | Topics Covered | Directory | Database | Port |
+|-------|---------------|-----------|----------|------|
+| 🔵 **Foundations** | Database Creation, Data Types, Constraints, Foreign Keys | `tutorial/00-foundations/` | `simple_school` | 3305 |
+| 🟢 **Beginner** | SELECT, WHERE, ORDER BY, Basic JOINs, LIMIT | `tutorial/01-beginner/` | `university_basic` | 3306 |
+| 🟡 **Intermediate** | **Subqueries**, **UNION**, GROUP BY, HAVING, Date Functions | `tutorial/02-intermediate/` | `university_intermediate` | 3307 |
+| 🔴 **Advanced** | Window Functions, CTEs, Recursive Queries, Analytics | `tutorial/03-advanced/` | `university_advanced` | 3308 |
+| 🎯 **Quiz Practice** | **Nested Queries**, **Constraints**, **UNION**, Complex Joins | `tutorial/quiz1-practice/` | `quiz1_practice` | 3309 |
 
-### 🟢 Beginner Level
-**Topics Covered:** Basic SELECT, WHERE, ORDER BY, JOINs, LIMIT
-- **Directory:** `tutorial/01-beginner/`
-- **Database:** `university_basic`
-- **Docker Image:** `university-mysql-beginner`
+### 🎯 Quiz Practice Highlights
+**🔗 [Detailed Quiz Guide](tutorial/quiz1-practice/README.md)**
 
-### 🟡 Intermediate Level  
-**Topics Covered:** GROUP BY, HAVING, Subqueries, UNION, Date Functions, CASE Statements
-- **Directory:** `tutorial/02-intermediate/`
-- **Database:** `university_intermediate` (with additional sample data)
-- **Docker Image:** `university-mysql-intermediate`
-
-### 🔴 Advanced Level
-**Topics Covered:** Window Functions, CTEs, Recursive Queries, Performance Optimization, Analytics
-- **Directory:** `tutorial/03-advanced/`
-- **Database:** `university_advanced` (with extended schema and large dataset)
-- **Docker Image:** `university-mysql-advanced`
+- ✅ **Nested Queries:** Scalar, correlated, EXISTS/NOT EXISTS patterns
+- ✅ **Integrity Constraints:** Primary keys, foreign keys, cascades, violations
+- ✅ **UNION Operations:** Set operations, duplicate handling
+- ✅ **Advanced Scenarios:** Employee management, hierarchies, division operations
 
 ## 🚀 Quick Start
 
-Choose your tutorial level and follow the instructions:
+### Option 1: Individual Tutorial Setup
+```bash
+# Choose your level and run:
+cd tutorial/{level-directory}
+docker build -t {image-name} .
+docker run --name {container-name} -p {port}:3306 {image-name}
+```
 
-#### Foundations Tutorial (START HERE!)
+### Option 2: Direct Commands by Level
+
+<details>
+<summary>🔵 Foundations (START HERE!)</summary>
+
 ```bash
 cd tutorial/00-foundations
 docker build -t university-mysql-foundations .
 docker run --name uni-db-foundations -p 3305:3306 university-mysql-foundations
 ```
+</details>
 
-#### Beginner Tutorial
+<details>
+<summary>🟢 Beginner</summary>
+
 ```bash
 cd tutorial/01-beginner
 docker build -t university-mysql-beginner .
 docker run --name uni-db-beginner -p 3306:3306 university-mysql-beginner
 ```
+</details>
 
-#### Intermediate Tutorial  
+<details>
+<summary>🟡 Intermediate</summary>
+
 ```bash
 cd tutorial/02-intermediate
 docker build -t university-mysql-intermediate .
 docker run --name uni-db-intermediate -p 3307:3306 university-mysql-intermediate
 ```
+</details>
 
-#### Advanced Tutorial
+<details>
+<summary>🔴 Advanced</summary>
+
 ```bash
 cd tutorial/03-advanced
 docker build -t university-mysql-advanced .
 docker run --name uni-db-advanced -p 3308:3306 university-mysql-advanced
 ```
+</details>
 
-## 📊 Database Schema
+<details>
+<summary>🎯 Quiz Practice</summary>
 
-The university database includes these main entities:
-- **Departments** - Academic departments
-- **Instructors** - Faculty members  
-- **Students** - Enrolled students
-- **Courses** - Available courses
-- **Sections** - Course offerings per term
-- **Enrollments** - Student-section relationships
-- **Quizzes & Submissions** - Assessment data
-- **Prerequisites** - Course dependencies
+```bash
+cd tutorial/quiz1-practice
+docker build -t quiz1-practice .
+docker run --name quiz1-db -p 3309:3306 quiz1-practice
+
+# Connect as student
+docker exec -it quiz1-db mysql -u student -pstudent123 quiz1_practice
+
+# Connect as admin
+docker exec -it quiz1-db mysql -u root -pquiz1practice quiz1_practice
+```
+</details>
 
 ## 🔗 Connection Details
 
@@ -79,34 +95,58 @@ The university database includes these main entities:
 | Beginner | 3306 | university_basic | root | beginnerpass |
 | Intermediate | 3307 | university_intermediate | root | intermediatepass |
 | Advanced | 3308 | university_advanced | root | advancedpass |
+| **Quiz Practice** | **3309** | **quiz1_practice** | **student/root** | **student123/quiz1practice** |
 
 ## 📖 Learning Path
 
-1. **Start with Foundations** - Learn database creation and basic concepts
-2. **Move to Beginner** - Learn fundamental SQL operations
-3. **Progress to Intermediate** - Master aggregation and complex queries  
-4. **Advance to Expert Level** - Explore performance optimization and analytics
+1. **🔵 Foundations** → Database creation and basic concepts
+2. **🟢 Beginner** → Fundamental SQL operations  
+3. **🟡 Intermediate** → Aggregation, subqueries, and unions
+4. **🔴 Advanced** → Performance optimization and analytics
+5. **🎯 Quiz Practice** → Comprehensive assessment and real-world scenarios
 
 Each tutorial includes:
-- ✅ Step-by-step query examples
-- ✅ Practical exercises with solutions
-- ✅ Real-world scenarios
-- ✅ Performance monitoring tools (advanced level)
+- ✅ Step-by-step query examples with explanations
+- ✅ Practical exercises with detailed solutions  
+- ✅ Real-world scenarios and use cases
+- ✅ Performance monitoring (advanced levels)
+
+## 📊 Database Schemas
+
+**University Database** (Levels 1-4): Departments, Instructors, Students, Courses, Sections, Enrollments, Quizzes, Prerequisites
+
+**Employee Database** (Quiz Practice): Employee hierarchy, departments, projects, work assignments, dependents with comprehensive constraints
 
 ## 🛠 Useful Commands
 
 ```bash
-# Connect to database (example for beginner level)
-mysql -h localhost -P 3306 -u root -p
+# Connect to any database
+mysql -h localhost -P {port} -u {username} -p
 
-# View query examples
-cat tutorial/01-beginner/queries.sql
+# View tutorial files
+cat tutorial/{level}/queries.sql
 
-# Stop and remove containers
-docker stop uni-db-beginner && docker rm uni-db-beginner
+# Container management
+docker stop {container-name} && docker rm {container-name}
+docker logs {container-name}
 
-# View logs
-docker logs uni-db-beginner
+# Quick cleanup
+docker stop $(docker ps -q) && docker rm $(docker ps -aq)
+```
+
+## 📁 File Structure
+```
+tutorial/
+├── 00-foundations/     # Database basics
+├── 01-beginner/        # SQL fundamentals  
+├── 02-intermediate/    # Subqueries & unions
+├── 03-advanced/        # Window functions & CTEs
+└── quiz1-practice/     # Comprehensive assessment
+    ├── README.md                           # Detailed guide
+    ├── 01-joins-and-filtering-practice.sql
+    ├── 02-integrity-constraints-practice.sql  
+    ├── 03-multiple-choice-practice.sql
+    └── 04-challenge-questions-practice.sql
 ```
 
 Happy Learning! 🎓
