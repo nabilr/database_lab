@@ -11,9 +11,64 @@ A comprehensive SQL learning environment with beginner, intermediate, and advanc
 | 🔴 **Advanced** | Window Functions, CTEs, Recursive Queries, Analytics | `tutorial/03-advanced/` | `university_advanced` | 3308 |
 | 🎯 **Quiz Practice** | **Nested Queries**, **Constraints**, **UNION**, Complex Joins | `tutorial/quiz1-practice/` | `quiz1_practice` | 3309 |
 
-### 🎯 Quiz Practice Highlights
-**🔗 [Detailed Quiz Guide](tutorial/quiz1-practice/README.md)**
+## 📋 Complete SQL Topics Coverage
 
+### 🔵 [Foundations](tutorial/00-foundations/)
+**🔗 [Practice Exercises](tutorial/00-foundations/practice-exercises.sql) | [Solutions](tutorial/00-foundations/solutions.sql)**
+
+| Topic | Concepts Covered |
+|-------|-----------------|
+| **Database Creation** | CREATE DATABASE, USE, DROP |
+| **Data Types** | VARCHAR, INT, DECIMAL, DATE, ENUM |
+| **Constraints** | PRIMARY KEY, FOREIGN KEY, NOT NULL, UNIQUE |
+| **Basic DML** | INSERT, UPDATE, DELETE |
+| **Table Design** | Normalization basics, relationships |
+
+### 🟢 [Beginner](tutorial/01-beginner/)
+**🔗 [Query Examples](tutorial/01-beginner/queries.sql)**
+
+| Topic | Concepts Covered |
+|-------|-----------------|
+| **SELECT Statements** | Basic SELECT, column aliases, DISTINCT |
+| **Filtering (WHERE)** | Comparison operators, AND/OR, IN, LIKE, NULL |
+| **Sorting & Limiting** | ORDER BY, LIMIT, OFFSET |
+| **Basic JOINs** | INNER JOIN, LEFT JOIN, table aliases |
+| **Pattern Matching** | LIKE with wildcards, regex basics |
+
+### 🟡 [Intermediate](tutorial/02-intermediate/)
+**🔗 [Query Examples](tutorial/02-intermediate/queries.sql)**
+
+| Topic | Concepts Covered |
+|-------|-----------------|
+| **Aggregation Functions** | COUNT, SUM, AVG, MIN, MAX, GROUP BY |
+| **Filtering Groups** | HAVING clause, GROUP BY with multiple columns |
+| **Subqueries** | Scalar subqueries, IN subqueries, EXISTS/NOT EXISTS |
+| **UNION Operations** | UNION, UNION ALL, combining result sets |
+| **Date Functions** | DATE, YEAR, MONTH, DATEDIFF, DATE_ADD |
+| **CASE Statements** | Simple CASE, searched CASE, conditional logic |
+
+### 🔴 [Advanced](tutorial/03-advanced/)
+**🔗 [Query Examples](tutorial/03-advanced/queries.sql)**
+
+| Topic | Concepts Covered |
+|-------|-----------------|
+| **Window Functions** | ROW_NUMBER, RANK, DENSE_RANK, LAG, LEAD |
+| **Analytical Functions** | Running totals, moving averages, NTILE |
+| **Common Table Expressions** | WITH clauses, recursive CTEs |
+| **Complex Analytics** | Cohort analysis, pivot tables, performance metrics |
+| **Query Optimization** | EXISTS vs IN, efficient pagination, indexing |
+
+### 🎯 [Quiz Practice](tutorial/quiz1-practice/)
+**🔗 [Comprehensive Guide](tutorial/quiz1-practice/README.md)**
+
+| Practice File | SQL Topics Covered |
+|---------------|-------------------|
+| **[01-joins-and-filtering-practice.sql](tutorial/quiz1-practice/01-joins-and-filtering-practice.sql)** | Complex JOINs, division operations, multi-table scenarios |
+| **[02-integrity-constraints-practice.sql](tutorial/quiz1-practice/02-integrity-constraints-practice.sql)** | **Constraint violations**, primary keys, foreign keys, cascades |
+| **[03-multiple-choice-practice.sql](tutorial/quiz1-practice/03-multiple-choice-practice.sql)** | Conceptual understanding, constraint behaviors |
+| **[04-challenge-questions-practice.sql](tutorial/quiz1-practice/04-challenge-questions-practice.sql)** | Advanced scenarios, schema design, optimization |
+
+#### 🎯 Quiz Practice Key Features
 - ✅ **Nested Queries:** Scalar, correlated, EXISTS/NOT EXISTS patterns
 - ✅ **Integrity Constraints:** Primary keys, foreign keys, cascades, violations
 - ✅ **UNION Operations:** Set operations, duplicate handling
