@@ -15,8 +15,14 @@ Master essential SQL concepts through comprehensive practice on:
 - **`02-integrity-constraints-practice.sql`** - Constraint violation scenarios and predictions
 - **`03-multiple-choice-practice.sql`** - 25+ multiple choice questions with detailed explanations
 - **`04-challenge-questions-practice.sql`** - Advanced variations and DDL exercises
-- **`solutions.sql`** - Complete solutions with explanations
 - **`Dockerfile`** - Docker environment for easy setup
+
+### Solution Files (Organized by Topic)
+- **`01-joins-and-filtering-solutions.sql`** - Complete solutions for joins and filtering practice
+- **`02-integrity-constraints-solutions.sql`** - Solutions and explanations for constraint scenarios
+- **`03-multiple-choice-solutions.sql`** - Detailed answers and explanations for multiple choice questions
+- **`04-challenge-questions-solutions.sql`** - Advanced solutions for challenge exercises
+- **`solutions.sql`** - Legacy combined solutions file (kept for reference)
 
 ## 🚀 Quick Start
 
@@ -80,7 +86,11 @@ mysql -u root -p quiz1_practice
 - Data validation and quality checks
 
 ### Phase 6: Solution Review (30 minutes)
-**Study:** `solutions.sql`
+**Study:** Individual solution files for each topic
+- **`01-joins-and-filtering-solutions.sql`** - Review your join query solutions
+- **`02-integrity-constraints-solutions.sql`** - Check your constraint predictions
+- **`03-multiple-choice-solutions.sql`** - Verify your conceptual understanding
+- **`04-challenge-questions-solutions.sql`** - Compare advanced challenge approaches
 - Compare your solutions with provided answers
 - Understand alternative approaches
 - Learn optimization techniques
