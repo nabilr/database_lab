@@ -99,6 +99,9 @@ INSERT INTO section (course_id, term, year_num, instructor_id, capacity, room) V
 -- ========================================
 -- ADDITIONAL ENROLLMENTS
 -- ========================================
+-- Temporarily drop prerequisite check trigger for sample data loading
+DROP TRIGGER IF EXISTS check_prerequisites_before_enrollment;
+
 INSERT INTO enrollment (student_id, section_id, enrolled_on, grade, semester, year_num) VALUES
 -- Spring 2025 enrollments
 (11, 11, '2025-01-15', 92.0, 'Spring', 2025),
@@ -223,10 +226,10 @@ INSERT INTO student_history (student_id, academic_year, semester, gpa, credits_a
 -- UPDATE STUDENT GPAs BASED ON ENROLLMENT GRADES
 -- ========================================
 
--- Update GPAs for students with enrollment grades
+-- Update GPAs for students with enrollment grades (convert 0-100 scale to 0-4 scale)
 UPDATE student s
 SET gpa = (
-    SELECT AVG(grade)
+    SELECT AVG(grade) / 25.0  -- Convert from 0-100 scale to 0-4 scale
     FROM enrollment e
     WHERE e.student_id = s.student_id
     AND e.grade IS NOT NULL
@@ -346,6 +349,46 @@ BEGIN
     LEFT JOIN instructor i ON d.dept_id = i.dept_id
     WHERE d.dept_id = dept_id_param
     GROUP BY d.dept_id, d.name, d.budget;
+END//
+
+DELIMITER ;
+
+-- ========================================
+-- RECREATE PREREQUISITE CHECK TRIGGER
+-- ========================================
+DELIMITER //
+
+CREATE TRIGGER check_prerequisites_before_enrollment
+BEFORE INSERT ON enrollment
+FOR EACH ROW
+BEGIN
+    DECLARE prereq_count INT DEFAULT 0;
+    DECLARE completed_count INT DEFAULT 0;
+    DECLARE enrolling_course_id INT;
+    
+    -- Get the course_id for the section being enrolled in
+    SELECT course_id INTO enrolling_course_id
+    FROM section
+    WHERE section_id = NEW.section_id;
+    
+    -- Count required prerequisites
+    SELECT COUNT(*) INTO prereq_count
+    FROM prerequisite p
+    WHERE p.course_id = enrolling_course_id;
+    
+    -- Count completed prerequisites
+    SELECT COUNT(DISTINCT p.prereq_id) INTO completed_count
+    FROM prerequisite p
+    INNER JOIN section sec ON sec.course_id = p.prereq_id
+    INNER JOIN enrollment e ON e.section_id = sec.section_id
+    WHERE p.course_id = enrolling_course_id
+    AND e.student_id = NEW.student_id
+    AND e.grade >= 70;
+    
+    IF prereq_count > 0 AND completed_count < prereq_count THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Prerequisites not met for this course';
+    END IF;
 END//
 
 DELIMITER ;

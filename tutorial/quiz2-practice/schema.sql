@@ -36,7 +36,7 @@ CREATE TABLE student (
     name VARCHAR(100) NOT NULL,
     dept_id INT,
     year_level ENUM('Freshman', 'Sophomore', 'Junior', 'Senior') DEFAULT 'Freshman',
-    gpa DECIMAL(3,2),
+    gpa DECIMAL(4,2),
     enrollment_date DATE,
     phone_number VARCHAR(15),
     current_academic_year YEAR,
@@ -243,9 +243,9 @@ DELIMITER //
 -- Procedure to calculate student GPA
 CREATE PROCEDURE CalculateStudentGPA(IN student_id_param INT)
 BEGIN
-    DECLARE calculated_gpa DECIMAL(3,2);
+    DECLARE calculated_gpa DECIMAL(4,2);
     
-    SELECT AVG(grade) INTO calculated_gpa
+    SELECT AVG(grade) / 25.0 INTO calculated_gpa  -- Convert 0-100 scale to 0-4 scale
     FROM enrollment
     WHERE student_id = student_id_param
     AND grade IS NOT NULL;
@@ -291,7 +291,7 @@ FOR EACH ROW
 BEGIN
     UPDATE student s
     SET gpa = (
-        SELECT AVG(grade)
+        SELECT AVG(grade) / 25.0  -- Convert 0-100 scale to 0-4 scale
         FROM enrollment e
         WHERE e.student_id = NEW.student_id
         AND e.grade IS NOT NULL
@@ -306,21 +306,24 @@ FOR EACH ROW
 BEGIN
     DECLARE prereq_count INT DEFAULT 0;
     DECLARE completed_count INT DEFAULT 0;
+    DECLARE enrolling_course_id INT;
+    
+    -- Get the course_id for the section being enrolled in
+    SELECT course_id INTO enrolling_course_id
+    FROM section
+    WHERE section_id = NEW.section_id;
     
     -- Count required prerequisites
     SELECT COUNT(*) INTO prereq_count
     FROM prerequisite p
-    WHERE p.course_id = (
-        SELECT course_id FROM section WHERE section_id = NEW.section_id
-    );
+    WHERE p.course_id = enrolling_course_id;
     
     -- Count completed prerequisites
-    SELECT COUNT(*) INTO completed_count
+    SELECT COUNT(DISTINCT p.prereq_id) INTO completed_count
     FROM prerequisite p
-    INNER JOIN enrollment e ON p.prereq_id = e.course_id
-    WHERE p.course_id = (
-        SELECT course_id FROM section WHERE section_id = NEW.section_id
-    )
+    INNER JOIN section sec ON sec.course_id = p.prereq_id
+    INNER JOIN enrollment e ON e.section_id = sec.section_id
+    WHERE p.course_id = enrolling_course_id
     AND e.student_id = NEW.student_id
     AND e.grade >= 70;
     
